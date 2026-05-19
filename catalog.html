@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinylBox — Catalog</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="logo" href="index.html">Vinyl<span>Box</span></a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="index.html">Welcome</a>
+          <a href="catalog.html" class="active" aria-current="page">Catalog</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <h1>Catalog</h1>
+      <p class="lead">
+        Add records, search and sort, and browse your shelf.
+      </p>
+
+      <div class="stats-bar" id="statsBar">
+        <span>…</span>
+      </div>
+
+      <section class="panel">
+        <h2 id="formPanelTitle">Add record</h2>
+        <p id="formPanelHint" class="form-hint"></p>
+        <form id="addForm">
+          <div class="form-row">
+            <label>
+              Album title
+              <input type="text" name="title" id="fieldTitle" required />
+            </label>
+            <label>
+              Artist
+              <input type="text" name="artist" id="fieldArtist" required />
+            </label>
+            <label>
+              Year
+              <input type="number" name="year" id="fieldYear" min="1900" max="2099" required />
+            </label>
+          </div>
+          <div class="form-row">
+            <label>
+              Genre
+              <input type="text" name="genre" id="fieldGenre" required />
+            </label>
+            <label>
+              Label
+              <input type="text" name="label" id="fieldLabel" required />
+            </label>
+          </div>
+
+          <div class="photo-fields-block">
+            <p class="song-rows-heading">Sleeve photos (optional)</p>
+            <p class="form-hint photo-fields-intro">
+              Image URL or file upload. Large files may not save.
+            </p>
+            <p id="photoEditNote" class="form-hint hidden">
+              Leave blank to keep current photo.
+            </p>
+            <div class="photo-preview-row">
+              <div id="wrapPreviewFront" class="photo-preview-wrap hidden">
+                <span class="optional-tag">Current front</span>
+                <img id="previewPhotoFront" alt="Front preview" />
+              </div>
+              <div id="wrapPreviewBack" class="photo-preview-wrap hidden">
+                <span class="optional-tag">Current back</span>
+                <img id="previewPhotoBack" alt="Back preview" />
+              </div>
+            </div>
+            <div class="form-row">
+              <label>
+                Front cover image URL
+                <input
+                  type="url"
+                  name="photoFront"
+                  id="fieldPhotoFront"
+                  placeholder="https://example.com/front.jpg"
+                  autocomplete="off"
+                />
+              </label>
+              <label class="photo-file-label">
+                Front photo file
+                <input type="file" id="filePhotoFront" accept="image/*" />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                Back cover image URL
+                <input
+                  type="url"
+                  name="photoBack"
+                  id="fieldPhotoBack"
+                  placeholder="https://example.com/back.jpg"
+                  autocomplete="off"
+                />
+              </label>
+              <label class="photo-file-label">
+                Back photo file
+                <input type="file" id="filePhotoBack" accept="image/*" />
+              </label>
+            </div>
+          </div>
+
+          <div class="song-rows-block">
+            <p class="song-rows-heading">Tracks</p>
+            <p class="form-hint song-rows-subhint" id="songRowsHint">
+              Add at least one track.
+            </p>
+            <div id="songRowsContainer" class="song-rows-container"></div>
+            <button type="button" class="btn btn-add-track" id="addSongRowBtn">
+              + Add another track
+            </button>
+          </div>
+
+          <p class="form-actions">
+            <button type="submit" class="btn btn-primary" id="formSubmitBtn">
+              Add
+            </button>
+            <button type="button" class="btn hidden" id="cancelEditBtn">
+              Cancel edit
+            </button>
+          </p>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Search &amp; sort</h2>
+        <div class="controls">
+          <label>
+            Search
+            <input type="search" id="searchInput" placeholder="e.g. jazz" />
+          </label>
+          <label>
+            Sort by
+            <select id="sortKey">
+              <option value="year">Year</option>
+              <option value="title">Album title</option>
+              <option value="artist">Artist</option>
+            </select>
+          </label>
+          <label>
+            Order
+            <select id="sortDir">
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </label>
+          <button type="button" class="btn" id="applySort">Apply sort</button>
+        </div>
+      </section>
+
+      <section class="collection-section">
+        <h2>Shelf</h2>
+        <p class="collection-hint">
+          Swipe the shelf. Open a card for details.
+        </p>
+        <div id="catalogEmpty" class="panel catalog-empty hidden" aria-live="polite"></div>
+        <div class="swiper catalogSwiper">
+          <div class="swiper-wrapper" id="catalogWrapper"></div>
+          <div class="swiper-button-prev catalog-nav-prev" aria-label="Previous record"></div>
+          <div class="swiper-button-next catalog-nav-next" aria-label="Next record"></div>
+          <div class="swiper-pagination catalog-pagination"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-brand">
+          <span class="footer-dj">JustNathan<sup class="footer-tm" aria-label="trademark">™</sup></span>
+        </p>
+        <ul class="footer-social">
+          <li>
+            <a href="https://www.instagram.com/nathanielreilly/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </li>
+          <li>
+            <a href="https://soundcloud.com/nathan-reilly-686062445" target="_blank" rel="noopener noreferrer">SoundCloud</a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- Modal: enlarged full card (images + details + tracks) -->
+    <div
+      id="trackModal"
+      class="track-modal hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="trackModalTitle"
+      aria-hidden="true"
+    >
+      <div class="track-modal-backdrop" data-close-modal tabindex="-1"></div>
+      <div class="track-modal-panel card-zoom-panel">
+        <button
+          type="button"
+          class="btn track-modal-close"
+          data-close-modal
+          aria-label="Close"
+        >
+          ×
+        </button>
+        <div class="card-zoom-discs" id="cardModalDiscRow">
+          <div
+            id="vinylFlipScene"
+            class="vinyl-flip-scene hidden"
+            role="button"
+            tabindex="0"
+            aria-label="Flip record"
+            aria-pressed="false"
+          >
+            <div class="vinyl-flip-inner" id="vinylFlipInner">
+              <div class="vinyl-flip-face vinyl-flip-face--front">
+                <figure class="vinyl-disc-wrap vinyl-disc-wrap--modal">
+                  <img id="cardModalImgFront" src="" alt="" width="400" height="400" />
+                </figure>
+              </div>
+              <div class="vinyl-flip-face vinyl-flip-face--back">
+                <figure class="vinyl-disc-wrap vinyl-disc-wrap--modal">
+                  <img id="cardModalImgBack" src="" alt="" width="400" height="400" />
+                </figure>
+              </div>
+            </div>
+          </div>
+          <div id="vinylModalSingle" class="vinyl-modal-single hidden">
+            <figure class="vinyl-disc-wrap vinyl-disc-wrap--modal">
+              <img id="cardModalImgSingle" src="" alt="" width="400" height="400" />
+            </figure>
+          </div>
+        </div>
+        <p class="card-zoom-labels" id="cardModalFlipHintRow">
+          <span id="cardModalFlipHint"></span>
+        </p>
+        <h2 id="trackModalTitle"></h2>
+        <p id="trackModalMeta" class="track-modal-meta"></p>
+        <p class="tracks-label">Tracklist</p>
+        <ul id="trackModalList" class="track-modal-list"></ul>
+      </div>
+    </div>
+
+    <script id="vinyl-template" type="text/x-handlebars-template">
+      {{#each vinyls}}
+      <div class="swiper-slide">
+        <article class="card vinyl-card collection-card {{#if isNewest}}highlight-newest{{/if}}">
+          <div
+            class="card-expand-hit"
+            tabindex="0"
+            role="button"
+            data-expand-id="{{id}}"
+            aria-label="View {{title}}"
+          >
+            <div class="vinyl-disc-wrap">
+              <img src="{{frontUrl}}" alt="{{title}} front cover" width="400" height="400" />
+            </div>
+            <h3>{{title}}</h3>
+            <p class="vinyl-meta">
+              <strong>{{artist}}</strong><br />
+              <span>{{year}}</span> · {{upper genre}} · {{label}}
+            </p>
+            <p class="tracks-label">Tracklist</p>
+            <ul class="song-list">
+              {{#each songs}}
+              <li>{{title}}{{#if hasBpm}} — {{bpm}} BPM{{/if}}</li>
+              {{/each}}
+            </ul>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn btn-edit" data-edit-id="{{id}}">
+              Edit
+            </button>
+            <button type="button" class="btn btn-danger" data-id="{{id}}">
+              Remove
+            </button>
+          </div>
+        </article>
+      </div>
+      {{/each}}
+    </script>
+
+    <script src="js/vinyl-data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/handlebars.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="js/catalog.js"></script>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinylBox — About</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="logo" href="index.html">Vinyl<span>Box</span></a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="index.html">Welcome</a>
+          <a href="catalog.html">Catalog</a>
+          <a href="about.html" class="active" aria-current="page">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <h1>About</h1>
+
+      <div class="two-col">
+        <section class="panel">
+          <h2>The website</h2>
+          <p>
+            I built VinylBox to catalogue my own vinyl. I DJ house, disco, and
+            techno and my collection is too big to keep in my head—I needed a
+            shelf I could actually browse.
+          </p>
+          <p>
+            Discogs is useful for storing what you own, but when I plan a set I
+            want BPM and key on every track, in one place. Discogs does not
+            show that the way I need. VinylBox lets me log records with
+            tracklists and optional BPM per song so I can prep before a gig. Key
+            is something I still want to add here for the same reason.
+          </p>
+          <p>
+            This site is my Website Development 2 college project—I used HTML, CSS,
+            JavaScript, Handlebars for templates, and Swiper for the carousels to build the site.
+          </p>
+        </section>
+
+        <section class="panel">
+          <h2>The collection</h2>
+          <p>
+            Each record holds the usual stuff — title, artist, year, genre, and
+            label. Where I have them, I add front and back sleeve photos too.
+            Under that goes the tracklist, and I can log a BPM on individual
+            tracks when I know it, which helps when I'm planning a set.
+          </p>
+          <p>
+            The shelf saves automatically in your browser, so your collection
+            is still there next time you open the site. Nothing gets sent
+            anywhere — it all stays on your machine.
+          </p>
+        </section>
+      </div>
+
+      <section class="panel">
+        <h2>Who built it</h2>
+        <p>
+          Nathan Reilly. I go by Just Nathan as my DJ name.
+        </p>
+        <div id="bioExtended" class="bio-extended hidden" aria-hidden="true">
+          <p>
+            I'm a Computing student at SETU. Outside college I spend most of
+            my time digging for records and playing out — my sound sits
+            between deep house, disco edits, and the dustier end of techno.
+            Anything with groove and a bit of soul.
+          </p>
+          <p>
+            Vinyl is the format I keep coming back to. There's something
+            about handling a record, reading the back of the sleeve, and
+            dropping the needle that streaming will never match. The trouble
+            is keeping track of what you own once the crate gets heavy —
+            that's where VinylBox came from. I wanted my own shelf,
+            organised the way I think about records when I'm planning a
+            set: tracklist, genre, label, and BPM where I know it.
+          </p>
+          <p>
+            Long term I'd like to add key detection, harmonic mixing notes,
+            and a way to build provisional setlists straight from the
+            catalog. For now this site is the foundation.
+          </p>
+        </div>
+        <button
+          type="button"
+          class="btn bio-toggle-btn"
+          id="bioToggleBtn"
+          data-expanded="false"
+          aria-controls="bioExtended"
+          aria-expanded="false"
+        >
+          Read more
+        </button>
+      </section>
+
+      <section class="panel comments-panel">
+        <h2>Guestbook</h2>
+        <p class="form-hint">Sign the guestbook.</p>
+        <form id="commentForm" class="comment-form">
+          <label>
+            Your name
+            <input
+              type="text"
+              id="commentName"
+              name="name"
+              required
+              maxlength="80"
+              autocomplete="name"
+              placeholder="Name"
+            />
+          </label>
+          <label>
+            Message
+            <textarea
+              id="commentMessage"
+              name="message"
+              required
+              maxlength="500"
+              rows="3"
+              placeholder="Message"
+            ></textarea>
+          </label>
+          <button type="submit" class="btn btn-primary">Post comment</button>
+        </form>
+        <h3 class="comments-list-heading">Comments</h3>
+        <div id="commentsHost" class="comments-host" aria-live="polite"></div>
+      </section>
+
+      <script id="comments-template" type="text/x-handlebars-template">
+        <div class="comment-list">
+          {{#each comments}}
+            <article class="comment-card">
+              <p class="comment-author">{{name}}</p>
+              <p class="comment-text">{{message}}</p>
+            </article>
+          {{else}}
+            <p class="comment-empty">No comments yet.</p>
+          {{/each}}
+        </div>
+      </script>
+
+      <section class="panel">
+        <h2>Questions</h2>
+        <div class="accordion-item">
+          <button type="button" class="accordion-toggle" data-acc="1">
+            Why Handlebars?
+            <span aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" id="accPanel1">
+            Templates render the catalog and comments from data without mixing
+            long HTML strings in JavaScript.
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-toggle" data-acc="2">
+            What plugin is used?
+            <span aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" id="accPanel2">
+            Swiper runs the carousels on Welcome and Catalog, set up in
+            <code style="color: var(--accent-soft)">home.js</code> and
+            <code style="color: var(--accent-soft)">catalog.js</code>.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-brand">
+          <span class="footer-dj">JustNathan<sup class="footer-tm" aria-label="trademark">™</sup></span>
+        </p>
+        <ul class="footer-social">
+          <li>
+            <a href="https://www.instagram.com/nathanielreilly/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </li>
+          <li>
+            <a href="https://soundcloud.com/nathan-reilly-686062445" target="_blank" rel="noopener noreferrer">SoundCloud</a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/handlebars.min.js"></script>
+    <script src="js/about.js"></script>
+  </body>
+</html>

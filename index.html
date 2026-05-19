@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VinylBox — Welcome</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="logo" href="index.html">Vinyl<span>Box</span></a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="index.html" class="active" aria-current="page">Welcome</a>
+          <a href="catalog.html">Catalog</a>
+          <a href="about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-text">
+          <p id="greeting" class="greeting" aria-live="polite">…</p>
+          <script src="js/greeting.js"></script>
+          <h1>Your vinyl shelf</h1>
+          <p class="lead">
+            Track albums, artists, years, and tracklists in one place.
+          </p>
+          <p>
+            <button type="button" class="btn btn-primary" id="ctaPulse">
+              View collection
+            </button>
+          </p>
+        </div>
+        <div class="hero-visual">
+          <div class="vinyl-hero-frame">
+            <div class="vinyl-disc-wrap vinyl-disc-wrap--lg">
+              <img
+                src="images/NewOrderFront.jpg"
+                alt="New Order — Blue Monday 1988 vinyl cover"
+                width="600"
+                height="600"
+                draggable="false"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="featured-wrap">
+        <h2>Featured spins</h2>
+        <p>A few picks from the shelf.</p>
+        <div class="swiper featuredSwiper">
+          <div class="swiper-wrapper"></div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </section>
+    </main>
+
+    <script id="featured-template" type="text/x-handlebars-template">
+      {{#each records}}
+        <div class="swiper-slide">
+          <div class="vinyl-disc-wrap">
+            <img src="{{frontUrl}}" alt="{{title}} cover" width="400" height="400" />
+          </div>
+          <h3>{{title}}</h3>
+          <p>{{upper genre}} · {{year}}</p>
+        </div>
+      {{/each}}
+    </script>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-brand">
+          <span class="footer-dj">JustNathan<sup class="footer-tm" aria-label="trademark">™</sup></span>
+        </p>
+        <ul class="footer-social">
+          <li>
+            <a href="https://www.instagram.com/nathanielreilly/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </li>
+          <li>
+            <a href="https://soundcloud.com/nathan-reilly-686062445" target="_blank" rel="noopener noreferrer">SoundCloud</a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+
+    <script src="js/vinyl-data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.8/dist/handlebars.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="js/home.js"></script>
+  </body>
+</html>
